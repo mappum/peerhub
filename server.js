@@ -60,6 +60,9 @@ Server.prototype.onConnect = function(conn) {
   var client = self.peers.all[id] = { id: id, conn: conn };
   conn.send(JSON.stringify({ event: 'init', id: id }));
 
+  if(self.opts.debug || self.opts.verbose)
+    console.log('incoming connection from '+conn._socket.remoteAddress+', assigning id '+id);
+
   conn.on('message', function(raw) {
     var data;
     try { data = JSON.parse(raw); }
@@ -80,9 +83,9 @@ Server.prototype.onConnect = function(conn) {
 Server.prototype.getPeers = function(client, req) {
   var n = req.n || 20;
   var ids = [];
-  for(var id in this.peers) ids.push(id);
+  for(var id in this.peers.public) ids.push(id);
   ids = shuffle(ids).slice(0, n);
-  client.conn.send(JSON.stringify({ event: 'peers', peers: ids }));
+  client.conn.send(JSON.stringify({ event: 'peers'+(req.reqId ? ':'+req.reqId : ''), peers: ids }));
 };
 
 Server.prototype.sendSignal = function(client, req) {
