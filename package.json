@@ -1,0 +1,29 @@
+{
+  "name": "webcoin-seed",
+  "version": "0.0.0",
+  "description": "A server to seed p2p connections for webcoin clients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "webcoin-seed": "./bin/server.js"
+  },
+  "keywords": [
+    "webcoin",
+    "seed",
+    "bitcoin",
+    "p2p",
+    "webrtc"
+  ],
+  "author": "Matt Bell <mappum@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "array-shuffle": "^1.0.0",
+    "corsify": "^2.1.0",
+    "minimist": "^1.1.1",
+    "randomstring": "^1.0.5",
+    "simple-peer": "^5.0.0",
+    "ws": "^0.7.1"
+  }
+}
