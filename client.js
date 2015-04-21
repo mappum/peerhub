@@ -29,21 +29,21 @@ var Client = module.exports = function(uri, opts, cb) {
 
   if(cb) this.on('initialized', cb);
   this.conn = new WebSocket('ws://'+this.uri);
-  this.conn.on('open', function() { self.emit('connect'); });
-  this.conn.on('message', this.onMessage.bind(this));
+  this.conn.onopen = function() { self.emit('connect'); }
+  this.conn.onmessage = this.onMessage.bind(this);
 };
 util.inherits(Client, EventEmitter);
 
-Client.prototype.onMessage = function(raw) {
+Client.prototype.onMessage = function(e) {
   var data;
-  try { data = JSON.parse(raw); }
+  try { data = JSON.parse(e.data); }
   catch(err) { return this.conn.close(); }
   if(!data.event) return this.conn.close();
 
   if(this.opts.debug || this.opts.verbose)
     console.log('received "'+data.event+'" message');
   if(this.opts.debug)
-    console.log(raw);
+    console.log(e.data);
 
   this.handlers.emit(data.event, data);
 };

@@ -58,7 +58,6 @@ Server.prototype.onConnect = function(conn) {
   var id;
   while(!id || self.peers.all[id]) id = randomstring(10);
   var client = self.peers.all[id] = { id: id, conn: conn };
-  conn.send(JSON.stringify({ event: 'init', id: id }));
 
   if(self.opts.debug || self.opts.verbose)
     console.log('incoming connection from '+conn._socket.remoteAddress+', assigning id '+id);
@@ -78,6 +77,8 @@ Server.prototype.onConnect = function(conn) {
   });
 
   self.emit('connection', client);
+
+  conn.send(JSON.stringify({ event: 'init', id: id }));
 };
 
 Server.prototype.getPeers = function(client, req) {
