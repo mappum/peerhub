@@ -1,6 +1,6 @@
 {
   "name": "peerhub",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Peer discovery and signalling for WebRTC P2P networks",
   "main": "index.js",
   "scripts": {

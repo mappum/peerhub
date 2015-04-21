@@ -3,7 +3,10 @@
 var argv = require('minimist')(process.argv.slice(2));
 var Server = require('../server.js');
 
-var verbose = argv.v || argv.verbose;
+var verbose = true;
+if(argv.verbose != null) verbose = argv.verbose;
+else if(argv.v != null) verbose = argv.v;
+
 var server = new Server({
   verbose: verbose,
   debug: argv.d || argv.debug
