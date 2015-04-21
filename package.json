@@ -1,10 +1,11 @@
 {
   "name": "peerhub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Peer discovery and signalling for WebRTC P2P networks",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -r ./client.js -s Peerhub > peerhub.js && cat peerhub.js | uglifyjs -m > peerhub.min.js"
   },
   "bin": {
     "peerhub": "./bin/server.js"
@@ -26,5 +27,9 @@
     "simple-peer": "^5.0.0",
     "wrtc": "0.0.55",
     "ws": "^0.7.1"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "uglify-js": "^2.4.20"
   }
 }
