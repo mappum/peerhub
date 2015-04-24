@@ -34,6 +34,11 @@ var Client = module.exports = function(uri, opts, cb) {
 };
 util.inherits(Client, EventEmitter);
 
+Client.prototype.disconnect = function() {
+  this.conn.close();
+  this.emit('disconnect');
+};
+
 Client.prototype.onMessage = function(e) {
   var data;
   try { data = JSON.parse(e.data); }
