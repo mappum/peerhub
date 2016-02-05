@@ -23,6 +23,7 @@
   "dependencies": {
     "array-shuffle": "^1.0.0",
     "corsify": "^2.1.0",
+    "get-browser-rtc": "^1.0.1",
     "minimist": "^1.2.0",
     "randomstring": "^1.1.0",
     "simple-peer": "^5.11.5",
@@ -31,8 +32,5 @@
   "devDependencies": {
     "browserify": "^9.0.8",
     "uglify-js": "^2.4.20"
-  },
-  "optionalDependencies": {
-    "wrtc": "0.0.55"
   }
 }

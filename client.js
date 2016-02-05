@@ -3,6 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var WebSocket = require('ws');
 var SimplePeer = require('simple-peer');
 var randomstring = require('randomstring').generate;
+var getBrowserRTC = require('get-browser-rtc');
 
 var Client = module.exports = function(uri, opts, cb) {
   var self = this;
@@ -17,6 +18,9 @@ var Client = module.exports = function(uri, opts, cb) {
   if(!uri) throw new Error('must specify a URI');
   this.opts = opts;
   this.uri = uri;
+
+  this.wrtc = opts.wrtc || getBrowserRTC()
+  if (!this.wrtc) throw new Error('No WebRTC implementation provided')
 
   this.pendingPeers = {};
 
@@ -80,7 +84,7 @@ Client.prototype.accept = function(onConnect) {
 Client.prototype.connect = function(peerId, cb) {
   var self = this;
   if(this.pendingPeers[peerId]) return;
-  var peer = this.pendingPeers[peerId] = new SimplePeer({ initiator: true, wrtc: require('wrtc') });
+  var peer = this.pendingPeers[peerId] = new SimplePeer({ initiator: true, wrtc: this.wrtc });
   peer.on('signal', function(signalData) {
     self.conn.send(JSON.stringify({ event: 'signal', to: peerId, signal: signalData }));
   });
@@ -98,7 +102,7 @@ Client.prototype.onSignal = function(data) {
 
     this.emit('signal', data);
 
-    peer = this.pendingPeers[data.from] = new SimplePeer({ wrtc: require('wrtc') });
+    peer = this.pendingPeers[data.from] = new SimplePeer({ wrtc: this.wrtc });
     peer.on('signal', function(signalData) {
       self.conn.send(JSON.stringify({
         event: 'signal',
