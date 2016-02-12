@@ -12,7 +12,7 @@ var server = new Server({
   debug: argv.d || argv.debug
 });
 
-var port = argv.port || argv.p;
+var port = argv.port || argv.p || process.env.PORT;
 var hostname = argv.hostname || argv.h;
 server.listen(port, hostname, function() {
   if(verbose)
