@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "bin/server.js",
     "build": "browserify -r ./client.js -s Peerhub > peerhub.js && cat peerhub.js | uglifyjs -m > peerhub.min.js"
   },
   "bin": {
